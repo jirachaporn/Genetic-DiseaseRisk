@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Autosomal Dominant Result</title>
+    <link href="output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-neutral-200 h-screen flex flex-col justify-between ">
+    <section class="nev_home bg-[#F78EBF]">
+        <nav class="flex p-4 items-center">
+            <img class="w-10 h-10 mx-5" src="\img\Logo.png" alt="Error" />
+            <h1 class="text-white text-4xl font-bold font-inria">Autosomal Dominant Result</h1>
+            <a href="Home.html" class="inline-block ml-auto">
+                <img class="w-14 h-14 ml-auto mr-8 transform transition-transform duration-300 hover:scale-110" src="\img\home.png" alt="Home Logo" />
+            </a>
+        </nav>
+    </section>
+
+    <div class="flex justify-center p-10 w-full">
+      <div class="bg-white md:w-4xl lg:w-2/3 rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex flex-col items-center">
+            <label for="dad-traits" class="text-2xl md:text-4xl font-semibold">DAD</label>
+            <select
+              id="dad-traits"
+              class="bg-gray-200 p-2 rounded-lg mt-2 text-xl md:text-2xl"
+            >
+              <option value="" disabled selected>Select Traits</option>
+              <option value="AA">AA (Healthy) </option>
+              <option value="Aa">Aa (Carrier)</option>
+              <option value="aa">aa (Diseased)</option>
+
+            </select>
+          </div>
+
+          <div style="border-left: 1px solid #e5e5e5; height: 80px; margin: 0 10px;"></div>
+
+          <div class="flex flex-col items-center">
+            <label for="mom-traits" class="text-2xl md:text-4xl font-semibold">MOM</label>
+            <select
+              id="mom-traits"
+              class="bg-gray-200 p-2 rounded-lg mt-2 text-xl md:text-2xl"
+            >
+              <option value="" disabled selected>Select Traits</option>
+              <option value="AA">AA (Healthy) </option>
+              <option value="Aa">Aa (Carrier)</option>
+              <option value="aa">aa (Diseased)</option>
+
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-gray-300  p-4 rounded-lg flex flex-col items-center justify-center  ">
+          <h1 class="text-4xl font-bold mt-5 mb-4">THE ANALYSIS RESULT</h1>
+          <div id="selected-disease" class="text-2xl  font-semibold mb-5 "></div>
+          <div class="bg-white shadow-xl w-10/12   rounded-2xl mb-5 min-h-72 max-h-96 flex flex-col items-center justify-center">
+            <p id="result" class="text-2xl  font-semibold  "></p>
+            <p id="calculation" class="text-2xl mt-4"></p>
+          </div>
+        </div>
+
+        <script>
+          // Function to update the result based on selected values
+          function updateResult() {
+              const dadTraits = document.getElementById('dad-traits').value;
+              const momTraits = document.getElementById('mom-traits').value;
+              const resultElement = document.getElementById('result');
+              const calculationElement = document.getElementById('calculation');
+  
+              // Check if both traits are selected
+              if (dadTraits && momTraits) {
+                  resultElement.innerHTML = `DAD Traits: ${dadTraits}, MOM Traits: ${momTraits}`;
+                  
+                  // Calculate offspring probabilities based on Mendelian inheritance
+                  const probabilities = calculateProbabilities(dadTraits, momTraits);
+                  calculationElement.innerHTML = `Offspring Probabilities: <br> 
+                                                  Healthy (AA): ${probabilities.AA}% <br>
+                                                  Carrier (Aa): ${probabilities.Aa}% <br>
+                                                  Diseased (aa): ${probabilities.aa}%`;
+              } else {
+                  resultElement.innerHTML = 'Please select both DAD and MOM traits.';
+                  calculationElement.innerHTML = ''; // Clear previous results
+              }
+          }
+  
+          // Function to calculate offspring probabilities
+          function calculateProbabilities(dad, mom) {
+              const combinations = {
+                  'AA+AA': { AA: 100, Aa: 0, aa: 0 },
+                  'AA+Aa': { AA: 50, Aa: 50, aa: 0 },
+                  'AA+aa': { AA: 0, Aa: 100, aa: 0 },
+                  'Aa+AA': { AA: 50, Aa: 50, aa: 0 },
+                  'Aa+Aa': { AA: 25, Aa: 50, aa: 25 },
+                  'Aa+aa': { AA: 0, Aa: 50, aa: 50 },
+                  'aa+AA': { AA: 0, Aa: 100, aa: 0 },
+                  'aa+Aa': { AA: 0, Aa: 50, aa: 50 },
+                  'aa+aa': { AA: 0, Aa: 0, aa: 100 }
+              };
+  
+              const key = `${dad}+${mom}`;
+              return combinations[key] || { AA: 0, Aa: 0, aa: 0 };
+          }
+  
+          // Add event listeners to the dropdowns
+          document.getElementById('dad-traits').addEventListener('change', updateResult);
+          document.getElementById('mom-traits').addEventListener('change', updateResult);
+  
+          // Display the selected disease from localStorage
+          document.addEventListener("DOMContentLoaded", () => {
+              const selectedDisease = localStorage.getItem("selectedDisease");
+              const selectedDiseaseElement = document.getElementById("selected-disease");
+  
+              if (selectedDisease) {
+                  selectedDiseaseElement.innerHTML = `Selected Disease: ${selectedDisease}`;
+              } else {
+                  selectedDiseaseElement.innerHTML = 'No disease selected.';
+              }
+          });
+      </script>
+</body>
+</html>

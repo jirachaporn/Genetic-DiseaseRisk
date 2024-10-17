@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Autosomal Recesssive</title>
+    <link href="output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+
+<body class="bg-neutral-200 h-screen flex flex-col justify-between">
+
+    <section class="nev_home bg-[#FFD676]">
+        <nav class="flex p-4 items-center">
+            <img class="w-10 h-10 mx-5" src="\img\Logo.png" alt="Error" />
+            <h1 class="text-white text-4xl font-bold font-inria">Autosomal Recesssive</h1>
+            <a href="Home.html" class="inline-block ml-auto">
+                <img
+                    class="w-14 h-14 ml-auto mr-8 transform transition-transform duration-300 hover:scale-110"
+                    src="\img\home.png" alt="Home Logo"
+                />
+            </a>
+        </nav>
+    </section>
+
+    <div class="flex justify-center p-10 w-full">
+        <div class="bg-white md:w-4xl lg:w-3/4 rounded-lg shadow-lg p-6">
+            <section class="flex flex-col justify-around items-center font-inria flex-grow">
+                <div class="m-10">
+                    <ol class="sm:text-xl md:text-2xl mt-10">
+                        <li>
+                            <p class="font-semibold">1. โรคเทย์-แซคส์ (Tay-Sachs)</p>
+                            <p class="mt-3">
+                                &nbsp;&nbsp;&nbsp;&nbsp;เป็นโรคที่ทำลายระบบประสาทส่วนกลางและสมอง เกิดจากการขาด Hexosaminidase A ทำให้สารไขมันที่เรียกว่า GM2 ganglioside สะสมในสมองจนทำให้เซลล์สมองเสียหาย
+                            </p>
+                        </li>
+                        <li class="mt-5">
+                            <p class="font-semibold">2. โรคธาลัสซีเมีย (Thalassemia)</p>
+                            <p class="mt-3">
+                                &nbsp;&nbsp;&nbsp;&nbsp; 
+                                เป็นโรคทางพันธุกรรมที่ทำให้การสร้างฮีโมโกลบินผิดปกติ ส่งผลให้เกิดภาวะโลหิตจางแบบเรื้อรังมีอาการเหนื่อยง่าย ผิวซีด <br>ตัวเหลือง บางครั้งอาจมีการเจริญเติบโตช้าและเกิดภาวะกระดูกผิดรูป
+                            </p>
+                        </li>
+                        <li class="mt-5">
+                            <p class="font-semibold">3. โรคฟีนิลคีโตนูเรีย (Phenylketonuria)</p>
+                            <p class="mt-3">
+                                &nbsp;&nbsp;&nbsp;&nbsp;เป็นโรคที่เกิดจากการขาดเอนไซม์ที่ช่วยย่อยสลายกรดอะมิโนฟีนิลอะลานีน ส่งผลให้สมองพัฒนาได้ช้า
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div>
+                    <select id="disease-select" name="select_disease" class="bg-[#FFD676] p-5 rounded-full sm:text-xl md:text-2xl">
+                        <option class="bg-white" disabled selected>Select the disease you want to analyze&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                        <option value="Albinisms" class="bg-white">โรคเผือก (Albinisms)</option>
+                        <option value="Thalassemia" class="bg-white">โรคธาลัสซีเมีย (Thalassemia)</option>
+                        <option value="Phenylketonuria" class="bg-white">โรคฟีนิลคีโตนูเรีย (Phenylketonuria)</option>
+                    </select>
+                </div>
+            </section>
+
+            <div class="flex justify-end">
+                <button id="done-button" class="sm:text-xl md:text-2xl mt-10 mb-16 mr-8 bg-[#8D8D8D] hover:bg-black duration-300 text-white font-semibold px-16 py-5 rounded-full">
+                    DONE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("done-button").addEventListener("click", function () {
+            const selectElement = document.getElementById("disease-select");
+            if (selectElement.value === "" || selectElement.selectedIndex === 0) {
+                alert("Please select a disease to proceed."); // แจ้งให้ผู้ใช้เลือก
+            } else {
+                localStorage.setItem("selectedDisease", selectElement.value); // เก็บค่าที่เลือก
+                window.location.href = 'AutosomalRecessiveRe.html'; // เปลี่ยนหน้าเมื่อเลือกแล้ว
+            }
+        });
+    </script>
+
+</body>
+</html>
